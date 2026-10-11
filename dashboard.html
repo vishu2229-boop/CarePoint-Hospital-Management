@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · CarePoint{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block content %}
+<section class="welcome">
+  <div><p class="eyebrow light">WELCOME BACK</p><h2>Better care starts with better records.</h2><p>Manage patient information, appointments, rooms and billing from one simple workspace.</p></div>
+  <div class="welcome-mark">✚</div>
+</section>
+<section class="stats-grid">
+  <div class="stat-card"><div class="stat-icon purple">♡</div><div><span>Total patients</span><strong>{{ stats.patients }}</strong><small>Registered records</small></div></div>
+  <div class="stat-card"><div class="stat-icon blue">⚕</div><div><span>Doctors</span><strong>{{ stats.doctors }}</strong><small>Medical team</small></div></div>
+  <div class="stat-card"><div class="stat-icon green">▣</div><div><span>Appointments</span><strong>{{ stats.appointments }}</strong><small>All appointments</small></div></div>
+  <div class="stat-card"><div class="stat-icon orange">₹</div><div><span>Bill records</span><strong>{{ stats.bills }}</strong><small>Billing entries</small></div></div>
+</section>
+<section class="content-grid">
+  <div class="panel">
+    <div class="panel-head"><div><p class="eyebrow">SCHEDULE</p><h3>Recent appointments</h3></div><a class="text-link" href="{{ url_for('appointments_page') }}">View all →</a></div>
+    {% if appointments %}
+    <div class="table-scroll"><table><thead><tr><th>Patient</th><th>Doctor</th><th>Date</th><th>Status</th></tr></thead><tbody>
+      {% for a in appointments %}<tr><td><strong>{{ a.patient }}</strong><small class="subcell">Appointment #{{ a.id }}</small></td><td>{{ a.doctor }}</td><td>{{ a.date }}</td><td><span class="pill">{{ a.status }}</span></td></tr>{% endfor %}
+    </tbody></table></div>
+    {% else %}<div class="empty-state"><div class="empty-icon">▣</div><strong>No appointments found</strong><p>Once appointment records are added to MySQL, they'll appear here.</p></div>{% endif %}
+  </div>
+  <div class="panel quick-panel"><p class="eyebrow">SHORTCUTS</p><h3>Quick actions</h3>
+    <a class="quick-action" href="{{ url_for('add_patient') }}"><span class="quick-icon purple">＋</span><span><strong>Add patient</strong><small>Create a patient record</small></span><b>→</b></a>
+    <a class="quick-action" href="{{ url_for('doctors') }}"><span class="quick-icon blue">⚕</span><span><strong>View doctors</strong><small>Browse the medical team</small></span><b>→</b></a>
+    <a class="quick-action" href="{{ url_for('rooms') }}"><span class="quick-icon green">⌂</span><span><strong>Check rooms</strong><small>Review room availability</small></span><b>→</b></a>
+    <a class="quick-action" href="{{ url_for('bills') }}"><span class="quick-icon orange">₹</span><span><strong>Open billing</strong><small>Review patient bills</small></span><b>→</b></a>
+  </div>
+</section>
+{% endblock %}

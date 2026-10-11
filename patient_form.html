@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Add patient · CarePoint{% endblock %}
+{% block heading %}Add patient{% endblock %}
+{% block content %}
+<section class="panel form-panel">
+  <div class="panel-head"><div><p class="eyebrow">PATIENT MANAGEMENT</p><h3>New patient record</h3><p class="muted">Submit the form to save the patient directly to MySQL.</p></div></div>
+  <form method="post" class="patient-form">
+    {% for col in columns %}
+      <label>{{ labels[col] }}
+      {% if 'gender' in col.lower() %}
+        <select name="{{ col }}"><option value="">Select gender</option><option>Female</option><option>Male</option><option>Other</option></select>
+      {% elif 'dob' in col.lower() or 'birth' in col.lower() %}
+        <input type="date" name="{{ col }}">
+      {% elif 'address' in col.lower() %}
+        <textarea name="{{ col }}" rows="2" placeholder="Enter address"></textarea>
+      {% elif 'phone' in col.lower() %}
+        <input name="{{ col }}" type="tel" placeholder="Enter phone number">
+      {% else %}
+        <input name="{{ col }}" placeholder="Enter {{ labels[col]|lower }}" {% if 'name' in col.lower() %}required{% endif %}>
+      {% endif %}
+      </label>
+    {% endfor %}
+    <div class="form-actions"><a class="button secondary" href="{{ url_for('patients') }}">Cancel</a><button class="button" type="submit">Save patient</button></div>
+  </form>
+</section>
+{% endblock %}

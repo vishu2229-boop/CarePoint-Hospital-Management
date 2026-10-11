@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · CarePoint{% endblock %}
+{% block heading %}{{ title }}{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="panel-head"><div><p class="eyebrow">DATABASE RECORDS</p><h3>{{ title }} directory</h3><p class="muted">Live data loaded from your MySQL database.</p></div>
+  {% if add_url %}<a class="button" href="{{ add_url }}">＋ Add patient</a>{% endif %}</div>
+  {% if rows %}
+  <div class="table-scroll"><table><thead><tr>{% for c in columns %}<th>{{ c.replace('_',' ') }}</th>{% endfor %}</tr></thead><tbody>
+  {% for row in rows %}<tr>{% for c in columns %}<td>{{ row[c] if row[c] is not none else '—' }}</td>{% endfor %}</tr>{% endfor %}
+  </tbody></table></div>
+  <div class="table-foot">{{ rows|length }} record(s) shown</div>
+  {% else %}<div class="empty-state"><div class="empty-icon">▤</div><strong>{{ empty_text }}</strong><p>When records exist in MySQL, they will be displayed here automatically.</p></div>{% endif %}
+</section>
+{% endblock %}

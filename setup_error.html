@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Database setup · CarePoint{% endblock %}
+{% block heading %}Connect your database{% endblock %}
+{% block content %}
+<section class="panel error-panel">
+  <div class="error-symbol">!</div><h2>MySQL connection needs attention</h2>
+  <p>The website could not connect to your database. Check that MySQL is running and the settings below match your local setup.</p>
+  <pre>{{ error }}</pre>
+  <h3>Current configuration (password hidden)</h3>
+  <pre>Host: {{ config.host }}
+Port: {{ config.port }}
+User: {{ config.user }}
+Database: {{ config.database }}
+Password: read from DB_PASSWORD environment variable</pre>
+  <p>See <strong>README.md</strong> for setup instructions. Never share your database password in screenshots or messages.</p>
+</section>
+{% endblock %}

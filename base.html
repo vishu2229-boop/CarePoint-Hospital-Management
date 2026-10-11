@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CarePoint Hospital{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">✚</span><span>CarePoint<span class="brand-sub">Hospital System</span></span></div>
+    <div class="nav-label">WORKSPACE</div>
+    <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint == 'dashboard' else '' }}">▦ <span>Dashboard</span></a>
+    <a href="{{ url_for('patients') }}" class="{{ 'active' if request.endpoint in ['patients','add_patient'] else '' }}">♡ <span>Patients</span></a>
+    <a href="{{ url_for('doctors') }}" class="{{ 'active' if request.endpoint == 'doctors' else '' }}">⚕ <span>Doctors</span></a>
+    <a href="{{ url_for('appointments_page') }}" class="{{ 'active' if request.endpoint == 'appointments_page' else '' }}">▣ <span>Appointments</span></a>
+    <a href="{{ url_for('rooms') }}" class="{{ 'active' if request.endpoint == 'rooms' else '' }}">⌂ <span>Rooms</span></a>
+    <a href="{{ url_for('bills') }}" class="{{ 'active' if request.endpoint == 'bills' else '' }}">₹ <span>Billing</span></a>
+    <div class="sidebar-bottom"><div class="avatar">CP</div><div><strong>Admin Portal</strong><small>Hospital staff</small></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><span class="eyebrow">HOSPITAL MANAGEMENT</span><h1>{% block heading %}Dashboard{% endblock %}</h1></div><div class="top-right"><span class="status-dot"></span> System overview <div class="user-badge">A</div></div></header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}<div class="flash-wrap">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <footer>CarePoint Hospital Management System <span>•</span> Flask + MySQL</footer>
+  </main>
+</body>
+</html>
